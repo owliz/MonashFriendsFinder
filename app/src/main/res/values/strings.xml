@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">MonashFriendsFinder</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string-array name="courses_array">
+        <item>IT(Information Technology)</item>
+        <item>IB(International Business)</item>
+        <item>TS(Transportation Systems)</item>
+        <item>ITS(Interpreting and Translation Studies)</item>
+        <item>ID(Industrial Design)</item>
+    </string-array>
+
+    <string-array name="sports_array">
+        <item>American Football</item>
+        <item>Badminton</item>
+        <item>Baseball</item>
+        <item>Basketball</item>
+        <item>Boxing</item>
+        <item>Cricket</item>
+        <item>Cycling</item>
+        <item>Football/Soccer</item>
+        <item>Golf</item>
+        <item>Gymnastics</item>
+        <item>Rugby</item>
+        <item>Swimming</item>
+        <item>Table Tennis</item>
+        <item>Tennis</item>
+        <item>Volleyball</item>
+    </string-array>
+
+    <string-array name="movieTypes_array">
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Comedy</item>
+        <item>Crime&amp;Gangster</item>
+        <item>Drama</item>
+        <item>Epics/Historical</item>
+        <item>Horror</item>
+        <item>Musicals/Dance</item>
+        <item>Science Fiction</item>
+        <item>War</item>
+        <item>Westerns</item>
+    </string-array>
+</resources>
