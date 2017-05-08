@@ -467,18 +467,22 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.AppCompatButton
+        <com.dd.CircularProgressButton
             android:id="@+id/btn_signup"
-            style="@style/common_button_style"
-            android:textSize="20sp"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:padding="12dp"
-            android:text="Create Account"/>
+            android:layout_height="40dp"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cpb_textComplete="Successful Created! "
+            app:cpb_textError="Error"
+            app:cpb_textIdle="Create Account"
+            app:cpb_cornerRadius="20.0px"
+            app:cpb_selectorIdle="@drawable/btn_idle_state_selector"
+            app:cpb_selectorComplete="@drawable/btn_complete_state_selector"/>
 
         <TextView android:id="@+id/tv_login"
+                  android:layout_marginTop="8dp"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginBottom="24dp"

@@ -72,26 +72,25 @@ tools:context="mdcsapp.android.owliz.com.myapplication.UI.MainActivity">
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintHorizontal_bias="0.494"/>
 
-
-<Button
-    android:id="@+id/btn_login"
-    style="@style/common_button_style"
-    android:clickable="true"
-    android:layout_margin="10dp"
-    android:layout_width="263dp"
-    android:layout_height="40dp"
-    android:text="Log  In"
-    android:textSize="25sp"
-    android:layout_marginTop="0dp"
-    app:layout_constraintTop_toBottomOf="@+id/et_pswd"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintBottom_toTopOf="@+id/tv_hint"
-    app:layout_constraintVertical_bias="0.0"
-    android:layout_marginRight="8dp"
-    app:layout_constraintRight_toRightOf="parent"
-    android:layout_marginLeft="8dp"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintHorizontal_bias="0.504"/>
+    <com.dd.CircularProgressButton
+        android:id="@+id/btn_login"
+        android:layout_width="269dp"
+        android:layout_height="40dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:cpb_textError="Error"
+        app:cpb_textIdle="Log  In"
+        app:cpb_cornerRadius="20.0px"
+        app:cpb_selectorIdle="@drawable/btn_idle_state_selector"
+        app:cpb_selectorComplete="@drawable/btn_complete_state_selector"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/et_pswd"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_hint"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 <TextView
     android:id="@+id/tv_hint"
@@ -99,7 +98,7 @@ tools:context="mdcsapp.android.owliz.com.myapplication.UI.MainActivity">
     android:layout_height="wrap_content"
     android:text="Doesn't have an account?"
     android:padding="5dp"
-    android:layout_marginBottom="-17dp"
+    android:layout_marginBottom="-27dp"
     app:layout_constraintBottom_toTopOf="@+id/tv_sign_up"
     android:layout_marginRight="8dp"
     app:layout_constraintRight_toRightOf="parent"
@@ -115,7 +114,7 @@ tools:context="mdcsapp.android.owliz.com.myapplication.UI.MainActivity">
     android:clickable="true"
     android:text="sign up"
     app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_marginBottom="102dp"
+    android:layout_marginBottom="67dp"
     android:layout_marginRight="8dp"
     app:layout_constraintRight_toRightOf="parent"
     android:layout_marginLeft="8dp"

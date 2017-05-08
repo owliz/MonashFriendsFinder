@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +17,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.dd.CircularProgressButton;
 
 import mdcsapp.android.owliz.com.myapplication.Logic.DatePickerFragment;
 import mdcsapp.android.owliz.com.myapplication.Logic.Student;
@@ -24,6 +29,8 @@ import mdcsapp.android.owliz.com.myapplication.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import database.DBStructure.DBManager;
 
@@ -59,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
     private Spinner msp_nativeLanguage;
     private Spinner msp_favoriteSport;
     private Spinner msp_favoriteMovieType;
-    private Button mbtn_signup;
+    private CircularProgressButton mbtn_signUp;
 
     protected DBManager dbManager;
 
@@ -95,8 +102,8 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
         msp_nativeLanguage = (Spinner) findViewById(R.id.sp_nativeLanguage);
         msp_favoriteSport = (Spinner) findViewById(R.id.sp_favoriteSport);
         msp_favoriteMovieType = (Spinner) findViewById(R.id.sp_favoriteMovieType);
-        // Button element
-        mbtn_signup = (Button) findViewById(R.id.btn_signup);
+        // CircularProgressButton element
+        mbtn_signUp = (CircularProgressButton) findViewById(R.id.btn_signup);
 
         // Spinner click listener
         msp_course.setOnItemSelectedListener(this);
@@ -108,17 +115,24 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
         // Loading spinner data from database
         loadNationSpinnerData();
         loadNativeLanguageSpinnerData();
-        //loadNationSpinnerData();
+
 
         // Loading spinner data from stringArry
         loadCourseSpinnerData();
         loadFavoriteSportSpinnerData();
         loadFavoriteMovieTypeSpinnerData();
 
-        mbtn_signup.setOnClickListener(new View.OnClickListener() {
+        mbtn_signUp.setIndeterminateProgressMode(true); // turn on indeterminate progress
+
+        /*mbtn_signup.setProgress(1); // set progress > 0 & < 100 to display indeterminate progress
+        mbtn_signup.setProgress(100); // set progress to 100 or -1 to indicate complete or error state*/
+
+
+        mbtn_signUp.setOnClickListener(new View.OnClickListener() {
 
                                            @Override
                                            public void onClick(View v) {
+                                               mbtn_signUp.setProgress(20);
                                                final String myId = met_email.getText().toString();
                                                final String myPswd = met_pswd.getText().toString();
                                                final String rePswd = met_repswd.getText().toString();
@@ -145,33 +159,39 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
 // Validate user input
                                                if (myId.isEmpty()) {
                                                    met_email.setError("email address is required!");
+                                                   mbtn_signUp.setProgress(0);
                                                    return;
                                                }
                                                if (myPswd.isEmpty()) {
                                                    met_pswd.setError("password is required!");
+                                                   mbtn_signUp.setProgress(0);
                                                    return;
                                                }
                                                if (rePswd.isEmpty()) {
                                                    met_repswd.setError("re-password is required!");
+                                                   mbtn_signUp.setProgress(0);
                                                    return;
                                                }
                                                if (firstNm.isEmpty()) {
                                                    met_firstNm.setError("firstNm is required!");
+                                                   mbtn_signUp.setProgress(0);
                                                    return;
                                                }
                                                if (surNm.isEmpty()) {
                                                    met_surNm.setError("surtNm is required!");
+                                                   mbtn_signUp.setProgress(0);
                                                    return;
                                                }
                                                if (!myPswd.equals(rePswd)) {
                                                    met_repswd.setError("Two different password input!");
+                                                   mbtn_signUp.setProgress(0);
                                                    return;
                                                }
                                                if (doB.equals("click to selectT00:00:00+08:00")) {
-                                                   mtv_showDoB.setError("please input your birth!");
+                                                   Toast.makeText(getApplicationContext(), "please input your birth!", Toast.LENGTH_SHORT).show();
+                                                   mbtn_signUp.setProgress(0);
                                                    return;
                                                }
-
 
 //create an anonymous AsyncTask
                                                new AsyncTask<String, Void, Integer>() {
@@ -190,13 +210,21 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
                                                    @Override
                                                    protected void onPostExecute(Integer response) {
                                                        if (response == 1) {
-                                                           System.out.println("-------------1");
+                                                           mbtn_signUp.setProgress(0);
+                                                           Toast.makeText(getApplicationContext(), "Account already exists!", Toast.LENGTH_SHORT).show();
                                                            met_email.setError("Account already exists!");
                                                        } else if (response == 0) {
-                                                           Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                                           //start intent
-                                                           startActivity(intent);
-                                                           finish();
+                                                           mbtn_signUp.setProgress(100);
+                                                           new Handler().postDelayed(new Runnable() {
+                                                               public void run() {
+                                                                   Toast.makeText(getApplicationContext(), "please return to login", Toast.LENGTH_SHORT).show();
+                                                                   Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                                                   //start intent
+                                                                   startActivity(intent);
+                                                                   finish();//execute the task
+                                                               }
+                                                           }, 2000);
+
                                                        }
 
                                                    }
@@ -225,7 +253,34 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
 
     // 4. Implement method in interface
     public void onDateSet(int year, int month, int day) {
-        mtv_showDoB.setText(year + "-" + (++month) + "-" + day);
+        String s_year;
+        String s_month;
+        String s_day;
+        if (year < 100) {
+            s_year = Integer.toString(year);
+            s_year = "00" + s_year;
+        } else if (year < 1000) {
+            s_year = Integer.toString(year);
+            s_year = "0" + s_year;
+        } else {
+            s_year = Integer.toString(year);
+        }
+
+        if (month < 9) {
+            s_month = Integer.toString(++month);
+            s_month = '0' + s_month;
+        } else {
+            s_month = Integer.toString(++month);
+        }
+
+        if (day < 10) {
+            s_day = Integer.toString(day);
+            s_day = '0' + s_day;
+        } else {
+            s_day = Integer.toString(day);
+        }
+
+        mtv_showDoB.setText(s_year + "-" + s_month + "-" + s_day);
     }
 
     /**
