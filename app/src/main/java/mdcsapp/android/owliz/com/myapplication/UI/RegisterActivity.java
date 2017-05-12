@@ -7,11 +7,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,14 +22,12 @@ import com.dd.CircularProgressButton;
 
 import mdcsapp.android.owliz.com.myapplication.Logic.DatePickerFragment;
 import mdcsapp.android.owliz.com.myapplication.Logic.Student;
-import mdcsapp.android.owliz.com.myapplication.Logic.VerifyLogin;
+import mdcsapp.android.owliz.com.myapplication.Logic.RestClient;
 import mdcsapp.android.owliz.com.myapplication.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import database.DBStructure.DBManager;
 
@@ -40,8 +37,7 @@ import database.DBStructure.DBManager;
  */
 
 // implement interface[DatePickerFragment.OnDateSetListener] declared in fragment
-public class RegisterActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener
-        , AdapterView.OnItemSelectedListener {
+public class RegisterActivity extends AppCompatActivity implements DatePickerFragment.OnDateSetListener {
 
     private TextView mtv_showDoB;
     private TextView mtv_login;
@@ -78,7 +74,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
 
         dbManager = new DBManager(this);
 
-
         //  TextView element
         mtv_showDoB = (TextView) findViewById(R.id.tv_showDoB);
         mtv_login = (TextView) findViewById(R.id.tv_login);
@@ -106,11 +101,78 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
         mbtn_signUp = (CircularProgressButton) findViewById(R.id.btn_signup);
 
         // Spinner click listener
-        msp_course.setOnItemSelectedListener(this);
-        msp_nation.setOnItemSelectedListener(this);
-        msp_nativeLanguage.setOnItemSelectedListener(this);
-        msp_favoriteSport.setOnItemSelectedListener(this);
-        msp_favoriteMovieType.setOnItemSelectedListener(this);
+        final boolean[] isSpinnerFirst = {true,true,true,true,true};
+        // Spinner click listener
+        msp_course.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if (isSpinnerFirst[0]) {
+                    //第一次初始化spinner时，不显示默认被选择的第一项即可
+                    view.setVisibility(View.INVISIBLE) ;
+                }
+                isSpinnerFirst[0] = false ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        msp_nation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if (isSpinnerFirst[1]) {
+                    //第一次初始化spinner时，不显示默认被选择的第一项即可
+                    view.setVisibility(View.INVISIBLE) ;
+                }
+                isSpinnerFirst[1] = false ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        msp_nativeLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if (isSpinnerFirst[2]) {
+                    //第一次初始化spinner时，不显示默认被选择的第一项即可
+                    view.setVisibility(View.INVISIBLE) ;
+                }
+                isSpinnerFirst[2] = false ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        msp_favoriteSport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if (isSpinnerFirst[3]) {
+                    //第一次初始化spinner时，不显示默认被选择的第一项即可
+                    view.setVisibility(View.INVISIBLE) ;
+                }
+                isSpinnerFirst[3] = false ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        msp_favoriteMovieType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                if (isSpinnerFirst[4]) {
+                    //第一次初始化spinner时，不显示默认被选择的第一项即可
+                    view.setVisibility(View.INVISIBLE) ;
+                }
+                isSpinnerFirst[4] = false ;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         // Loading spinner data from database
         loadNationSpinnerData();
@@ -197,12 +259,12 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
                                                new AsyncTask<String, Void, Integer>() {
                                                    @Override
                                                    protected Integer doInBackground(String... params) {
-                                                       if (!(VerifyLogin.getId(myId)).equals("[]")) {
+                                                       if (!(RestClient.getId(myId)).equals("[]")) {
                                                            return 1;
                                                        } else {
                                                            Student stu = new Student(myId, myPswd, firstNm, surNm, course, doB, gender, studyMd, currentJb,
                                                                    nativeLanguage, nation, addr, suburb, favoriteUt, favoriteSpt, favoriteMt, favoriteMv, currentDate);
-                                                           VerifyLogin.signup(stu);
+                                                           RestClient.signUp(stu);
                                                            return 0;
                                                        }
                                                    }
@@ -237,12 +299,13 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
         mtv_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                //start intent
-                startActivity(intent);
                 finish();
             }
         });
+
+        //
+        int keyCode=0;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {}
 
     }
 
@@ -377,18 +440,17 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerFra
     }
 
 
-    //    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position,
-                               long id) {
-        // On selecting a spinner item
-        String label = parent.getItemAtPosition(position).toString();
-
-    }
-
-    //    @Override
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-    }
+//    //    @Override
+//    public void onItemSelected(AdapterView<?> parent, View view, int position,
+//                               long id) {
+//        // On selecting a spinner item
+////        String label = parent.getItemAtPosition(position).toString();
+//    }
+//
+//    //    @Override
+//    public void onNothingSelected(AdapterView<?> arg0) {
+//        // TODO Auto-generated method stub
+//    }
 
     public String formatCurrentDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");

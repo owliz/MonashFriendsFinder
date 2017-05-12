@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="mdcsapp.android.owliz.com.myapplication">
+                package="mdcsapp.android.owliz.com.myapplication"
+               >
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
@@ -23,6 +24,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".UI.RegisterActivity"/>
+        <activity
+            android:name=".UI.SearchResultActivity"/>
     </application>
 
 </manifest>

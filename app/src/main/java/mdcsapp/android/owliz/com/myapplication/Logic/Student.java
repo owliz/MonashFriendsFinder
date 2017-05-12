@@ -51,6 +51,149 @@ public class Student {
         this.subscriptionDate = currentDate;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String mFirstName) {
+        firstName = mFirstName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String mSurname) {
+        surname = mSurname;
+    }
+
+    public String getDoB() {
+        return doB;
+    }
+
+    public void setDoB(String mDoB) {
+        doB = mDoB;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String mGender) {
+        gender = mGender;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String mCourse) {
+        course = mCourse;
+    }
+
+    public String getStudyMode() {
+        return studyMode;
+    }
+
+    public void setStudyMode(String mStudyMode) {
+        studyMode = mStudyMode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String mAddress) {
+        address = mAddress;
+    }
+
+    public String getSuburb() {
+        return suburb;
+    }
+
+    public void setSuburb(String mSuburb) {
+        suburb = mSuburb;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String mNationality) {
+        nationality = mNationality;
+    }
+
+    public String getNativeLanguage() {
+        return nativeLanguage;
+    }
+
+    public void setNativeLanguage(String mNativeLanguage) {
+        nativeLanguage = mNativeLanguage;
+    }
+
+    public String getFavoriteSport() {
+        return favoriteSport;
+    }
+
+    public void setFavoriteSport(String mFavoriteSport) {
+        favoriteSport = mFavoriteSport;
+    }
+
+    public String getFavoriteMovieType() {
+        return favoriteMovieType;
+    }
+
+    public void setFavoriteMovieType(String mFavoriteMovieType) {
+        favoriteMovieType = mFavoriteMovieType;
+    }
+
+    public String getFavoriteMovie() {
+        return favoriteMovie;
+    }
+
+    public void setFavoriteMovie(String mFavoriteMovie) {
+        favoriteMovie = mFavoriteMovie;
+    }
+
+    public String getFavouriteUnit() {
+        return favouriteUnit;
+    }
+
+    public void setFavouriteUnit(String mFavouriteUnit) {
+        favouriteUnit = mFavouriteUnit;
+    }
+
+    public String getCurrentJob() {
+        return currentJob;
+    }
+
+    public void setCurrentJob(String mCurrentJob) {
+        currentJob = mCurrentJob;
+    }
+
+    public String getMonashEmail() {
+        return monashEmail;
+    }
+
+    public void setMonashEmail(String mMonashEmail) {
+        monashEmail = mMonashEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String mPassword) {
+        password = mPassword;
+    }
+
+    public String getSubscriptionDate() {
+        return subscriptionDate;
+    }
+
+    public void setSubscriptionDate(String mSubscriptionDate) {
+        subscriptionDate = mSubscriptionDate;
+    }
 
     public String spliteCourse(String str) {
         String tmp = str;
